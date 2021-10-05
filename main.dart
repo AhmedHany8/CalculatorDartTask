@@ -13,11 +13,11 @@ class Calculator {
   int division({int firstOperand: 0, int secondOperand: 0}) =>
       firstOperand ~/ secondOperand;
 
-  printResult() {
+  void printResult() {
     print(
         "\n              ---Linear Calculator---              \n              *************************              ");
 
-    String equation, operator;
+    String equation, operator = '';
     int? firstOperand, secondOperand;
 
     do {
@@ -34,7 +34,6 @@ class Calculator {
         if (value == '+' || value == '-' || value == '*' || value == '/') {
           try {
             firstOperand = int.parse(equation.substring(0, i - 1));
-            print(firstOperand);
           } catch (e) {
             print(
                 "ERROR: Please Enter an Interger Number in the First Operand\n");
@@ -43,21 +42,53 @@ class Calculator {
 
           try {
             secondOperand = int.parse(equation.substring(i));
-            print(secondOperand);
           } catch (e) {
             print(
                 "ERROR: Please Enter an Interger Number in the Second Operand\n");
             continueSwitch = true;
           }
 
+          operator = equation.substring(i - 1, i);
+
           i = 0;
-        } else if (i == equation.length) {
+        } else if (i == equation.length && equation != '0') {
           print("ERROR: Please Enter One of these Operators ( + , - , * , / )");
           continueSwitch = true;
         }
         ;
       });
-      if (continueSwitch) continue;
+
+      if (continueSwitch || equation == '0') continue;
+
+      switch (operator) {
+        case '+':
+          print("\nThe Result is ==> ${addition(
+              firstOperand: int.parse(firstOperand.toString()),
+              secondOperand: int.parse(secondOperand.toString()))}");
+          
+          break;
+        case '-':
+          print("\nThe Result is ==> ${subtraction(
+              firstOperand: int.parse(firstOperand.toString()),
+              secondOperand: int.parse(secondOperand.toString()))}");
+          
+          break;
+        case '*':
+          print("\nThe Result is ==> ${multiplication(
+              firstOperand: int.parse(firstOperand.toString()),
+              secondOperand: int.parse(secondOperand.toString()))}");
+          
+          break;
+        case '/':
+          print("\nThe Result is ==> ${division(
+              firstOperand: int.parse(firstOperand.toString()),
+              secondOperand: int.parse(secondOperand.toString()))}");
+         
+          break;
+
+        default:
+          print("must be handeled before!");
+      }
     } while (equation != "0");
   }
 }
