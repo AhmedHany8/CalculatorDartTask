@@ -19,7 +19,6 @@ class Calculator {
 
     String equation, operator;
     int? firstOperand, secondOperand;
-    
 
     do {
       bool continueSwitch = false;
@@ -30,17 +29,29 @@ class Calculator {
 
       equation.runes.forEach((element) {
         i++;
-        print(equation.length);
-        print(i);
+
         String value = String.fromCharCode(element);
         if (value == '+' || value == '-' || value == '*' || value == '/') {
           try {
             firstOperand = int.parse(equation.substring(0, i - 1));
+            print(firstOperand);
           } catch (e) {
-            print("ERROR: Please Enter an Interger Number\n");
+            print(
+                "ERROR: Please Enter an Interger Number in the First Operand\n");
             continueSwitch = true;
           }
-        } else if (i == equation.length && !continueSwitch) {
+
+          try {
+            secondOperand = int.parse(equation.substring(i));
+            print(secondOperand);
+          } catch (e) {
+            print(
+                "ERROR: Please Enter an Interger Number in the Second Operand\n");
+            continueSwitch = true;
+          }
+
+          i = 0;
+        } else if (i == equation.length) {
           print("ERROR: Please Enter One of these Operators ( + , - , * , / )");
           continueSwitch = true;
         }
