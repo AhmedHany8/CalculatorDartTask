@@ -15,29 +15,38 @@ class Calculator {
 
   printResult() {
     print(
-          "\nLinear Calculator\n");
+        "\n              ---Linear Calculator---              \n              *************************              ");
 
     String equation, operator;
     int? firstOperand, secondOperand;
-    int i = 0;
+    
+
     do {
+      bool continueSwitch = false;
+      int i = 0;
       print(
           "\nPlease Enter your Equation in the Shape a (+,-,*,/) b\n*****************************************************\n");
       equation = stdin.readLineSync().toString();
 
       equation.runes.forEach((element) {
         i++;
+        print(equation.length);
+        print(i);
         String value = String.fromCharCode(element);
         if (value == '+' || value == '-' || value == '*' || value == '/') {
           try {
             firstOperand = int.parse(equation.substring(0, i - 1));
           } catch (e) {
-            print(
-                "Please Enter an Interger Number\n                  *******************************");
+            print("ERROR: Please Enter an Interger Number\n");
+            continueSwitch = true;
           }
+        } else if (i == equation.length && !continueSwitch) {
+          print("ERROR: Please Enter One of these Operators ( + , - , * , / )");
+          continueSwitch = true;
         }
         ;
       });
+      if (continueSwitch) continue;
     } while (equation != "0");
   }
 }
