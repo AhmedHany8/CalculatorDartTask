@@ -1,7 +1,8 @@
 import 'dart:io';
 
 class Calculator {
-  int addition({int firstOperand: 0, int secondOperand: 0}) =>
+                                                                     //core functions
+  int addition({int firstOperand: 0, int secondOperand: 0}) =>                  
       firstOperand + secondOperand;
 
   int subtraction({int firstOperand: 0, int secondOperand: 0}) =>
@@ -13,6 +14,8 @@ class Calculator {
   int division({int firstOperand: 0, int secondOperand: 0}) =>
       firstOperand ~/ secondOperand;
 
+
+                                                                        //Controller function
   void printResult() {
     print(
         "\n              ---Linear Calculator---              \n              *************************              ");
@@ -21,27 +24,27 @@ class Calculator {
     int? firstOperand, secondOperand;
 
     do {
-      bool continueSwitch = false;
-      int i = 0;
+      bool continueSwitch = false;   //continue the loop outside the for each method becouse it doesn't support the break or continue
+      int i = 0;                     //counter for each charcter in the string used in the substring function to split the numbers and the operator
       print(
           "\nPlease Enter your Equation in the Shape a (+,-,*,/) b\n*****************************************************\n");
-      equation = stdin.readLineSync().toString();
+      equation = stdin.readLineSync().toString();   //assign the user's equation to this variable
 
-      equation.runes.forEach((element) {
+      equation.runes.forEach((element) {            //foreach loop to seach for the operator then splits the first and the second operand
         i++;
 
-        String value = String.fromCharCode(element);
+        String value = String.fromCharCode(element);   // converts the value of the element from ascii code to string
         if (value == '+' || value == '-' || value == '*' || value == '/') {
-          try {
-            firstOperand = int.parse(equation.substring(0, i - 1));
+          try {                                           // handle the wrong entry for first operand
+            firstOperand = int.parse(equation.substring(0, i - 1));     
           } catch (e) {
             print(
                 "ERROR: Please Enter an Interger Number in the First Operand\n");
             continueSwitch = true;
           }
 
-          try {
-            secondOperand = int.parse(equation.substring(i));
+          try {                                            // handle the wrong entry for first operand
+            secondOperand = int.parse(equation.substring(i));        
           } catch (e) {
             print(
                 "ERROR: Please Enter an Interger Number in the Second Operand\n");
@@ -50,17 +53,17 @@ class Calculator {
 
           operator = equation.substring(i - 1, i);
 
-          i = 0;
-        } else if (i == equation.length && equation != '0') {
+          i = 0;                                           // reset the counter to avoid the else if handler below
+        } else if (i == equation.length && equation != '0') {                   //handles the non operational equation
           print("ERROR: Please Enter One of these Operators ( + , - , * , / )");
           continueSwitch = true;
         }
         ;
       });
 
-      if (continueSwitch || equation == '0') continue;
+      if (continueSwitch || equation == '0') continue;                          //skip the swich if the foreach method cathes any errors
 
-      switch (operator) {
+      switch (operator) {                                                       //calculate and print the operation
         case '+':
           print("\nThe Result is ==> ${addition(
               firstOperand: int.parse(firstOperand.toString()),
@@ -89,7 +92,7 @@ class Calculator {
         default:
           print("must be handeled before!");
       }
-    } while (equation != "0");
+    } while (equation != "0");                                                  //breakes when the user enter
   }
 }
 
